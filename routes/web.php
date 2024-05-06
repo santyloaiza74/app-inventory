@@ -1,17 +1,13 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\CursoController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', HomeController::class);
 
-Route::get('cursos',function () {
-    return view('cursos.index');
-});
-Route::get('cursos/create', function () {
-    return 'Formulario para crear un curso';
-});
-Route::get('cursos/{curso}',function ($curso) {
-    return 'bienvnido al curso: ' . $curso;
+Route::prefix('cursos')->group(function () {
+    Route::get('/', [CursoController::class, 'index'])->name('cursos.index');
+    Route::get('/create', [CursoController::class, 'create'])->name('cursos.create');
+    Route::get('/{curso}', [CursoController::class, 'show'])->name('cursos.show');
 });
